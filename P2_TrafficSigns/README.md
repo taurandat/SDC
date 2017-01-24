@@ -21,3 +21,13 @@ cd CarND-Traffic-Sign-Classifier-Project
 jupyter notebook Traffic_Sign_Classifier.ipynb
 ```
 3. Follow the instructions in the `Traffic_Sign_Recognition.ipynb` notebook.
+
+### Architecture
+
+This project will follow the architecture describes by Sermanet and LeCun in [this article](http://yann.lecun.com/exdb/publis/pdf/sermanet-ijcnn-11.pdf).
+
+![alt text](architecture.png)
+
+We attained 99.5% accuracy on validation set, and 95% accuracy on the official test set.
+
+When the classifier is tested again the data from another distribution (which is a mixed of UK and non-EU signs), the classifier attained a humble score of 81.2% accuracy.
