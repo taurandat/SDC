@@ -1,0 +1,11 @@
+# video files
+*.mp4
+
+# python
+.ipynb_checkpoints
+*.h5
+*.npy
+
+# binary
+*.swp
+*.p
