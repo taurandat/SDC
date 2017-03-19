@@ -64,12 +64,6 @@ def get_next_image_files(batch_size=64):
 def generate_next_batch(batch_size=64):
     """
     This generator yields the next training batch
-
-    :param batch_size:
-        Number of training images in a single batch
-
-    :return:
-        A tuple of features and steering angles as two numpy arrays
     """
     while True:
         X_batch = []
@@ -82,6 +76,7 @@ def generate_next_batch(batch_size=64):
             X_batch.append(new_image)
             y_batch.append(new_angle)
 
-        assert len(X_batch) == batch_size, 'len(X_batch) == batch_size should be True'
+        assert len(
+            X_batch) == batch_size, 'len(X_batch) == batch_size should be True'
 
         yield np.array(X_batch), np.array(y_batch)

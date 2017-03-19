@@ -61,8 +61,6 @@ The images will be preprocessed before putting into the CNN as follow:
 
 ![Images preprocessing pipeline](assets/preprocess_pipeline.png)
 
-One can find all the necessary function for handling the images in [here](image_utils.py).
-
 ### 2. Model architecture
 
 The model architecture is borrowed from NVIDIA paper [End to End Learning for Self-Driving Cars](https://images.nvidia.com/content/tegra/automotive/images/2016/solutions/pdf/end-to-end-dl-using-px.pdf).

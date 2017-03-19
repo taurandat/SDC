@@ -76,13 +76,3 @@ def random_rotation(image, steering_angle, rotation_amount=15):
     angle = np.random.uniform(-rotation_amount, rotation_amount + 1)
     rad = (np.pi / 180.0) * angle
     return rotate(image, angle, reshape=False), steering_angle + (-1) * rad
-
-
-def min_max(data, a=-0.5, b=0.5):
-    """
-    Normalize the data base on the min-max method.
-    """
-    data_max = np.max(data)
-    data_min = np.min(data)
-
-    return a + (b - a) * ((data - data_min) / (data_max - data_min))
