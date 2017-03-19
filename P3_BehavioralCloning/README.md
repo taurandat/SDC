@@ -1,21 +1,18 @@
-#**Behavioral Cloning** 
-
-##Writeup Template
-
-###You can use this file as a template for your writeup if you want to submit it as a markdown file, but feel free to use some other method and submit a pdf if you prefer.
+# Behavioral Cloning Report
 
 ---
 
-**Behavioral Cloning Project**
+## Behavioral Cloning Project
 
 The goals / steps of this project are the following:
+
 * Use the simulator to collect data of good driving behavior
 * Build, a convolution neural network in Keras that predicts steering angles from images
 * Train and validate the model with a training and validation set
 * Test that the model successfully drives around track one without leaving the road
 * Summarize the results with a written report
 
---
+---
 
 ## Project structure
 
@@ -27,12 +24,12 @@ My project includes the following files:
 * **model.py** containing the script to create and train the model
   + **image_utils.py** containing helper functions for images augmentation
   + **generate_utils.py** containing helper functions to generate/preprocess images for training and validating
-  + **os_utils.py** containing helper functions for saving trained models 
+  + **os_utils.py** containing helper functions for saving trained models
 * **drive.py** for driving the car in autonomous mode
 * **model_{activation}_drop.json** containing the CNN's architecture, while **model_{activation}_drop.h5** containing the weights of a trained CNN
 * **writeup_report.md** summarizing the results
 
-Using the Udacity provided simulator and my drive.py file, the car can be driven autonomously around the track by executing 
+Using the Udacity provided simulator and my drive.py file, the car can be driven autonomously around the track by executing
 
 ```sh
 python drive.py model_elu_drop.json
@@ -50,7 +47,7 @@ The model.py file contains the code for training and saving the convolution neur
 
 ## Model Architecture and Training Strategy
 
-###1. Data
+### 1. Data
 
 We use the sample data from [Udacity](https://d17h27t6h515a5.cloudfront.net/topher/2016/December/584f6edd_data/data.zip).
 
@@ -58,13 +55,13 @@ From each timestamp, we got three recorded picture from the simulator:
 
 | Left Camera | Center Camera | Right Camera |
 |-------------|---------------|--------------|
-| ![](assets/pic_left.jpg) | ![](assets/pic_center.jpg) | ![](assets/pic_right.jpg) | 
+| ![](assets/pic_left.jpg) | ![](assets/pic_center.jpg) | ![](assets/pic_right.jpg) |
 
 The images will be preprocess before putting into the CNN as follow:
 
-![Images preprocessing pipeline](preprocess_pipeline.png)
+![Images preprocessing pipeline](assets/preprocess_pipeline.png)
 
-###2. Model architecture
+### 2. Model architecture
 
 The model architecture is borrowed from NVIDIA paper [End to End Learning for Self-Driving Cars](https://images.nvidia.com/content/tegra/automotive/images/2016/solutions/pdf/end-to-end-dl-using-px.pdf).
 
@@ -160,20 +157,20 @@ Trainable params: 2,117,455
 Non-trainable params: 472
 ```
 
-###3. Training and parameter tuning
+### 3. Training and parameter tuning
 
 This is a regression problem so our goal is to minimize the Mean Square Error of the vehicle control output.
 
-We used `fit_generator` API of the Keras library for training our model, as the training data was too large to fit into our memory. 
+We used `fit_generator` API of the Keras library for training our model, as the training data was too large to fit into our memory.
 
-``python
+```python
 history = model.fit_generator(train_gen,
                               samples_per_epoch=number_of_samples_per_epoch,
                               nb_epoch=number_of_epochs,
                               validation_data=valid_gen,
                               nb_val_samples=number_of_validation_samples,
                               verbose=1)
-``
+```
 
 The two instances `train_gen` and `valid_gen` are for generating training data and validation data on the fly, respectively. The batch size for both of the generators were 64. We used 25600 images per training epoch, and 6400 images for validation. The ratio of training images versus validation images per each epoch is 80% - 20%.
 
@@ -185,18 +182,18 @@ train_gen = generate_utils.generate_next_batch()
 valid_gen = generate_utils.generate_next_batch()
 ```
 
-We trained our model within 20 epochs to get the best number of training epoch. We also tried two different activation functions (**ReLU** and **ELU**) to see which will produce the best/more stable outcome.
+We trained our model within **20 epochs** to get the best number of training epoch. We also tried two different activation functions (**ReLU** and **ELU**) to see which will produce the best/more stable outcome.
 
 ```python
 number_of_epochs = 20
 activation_layers = ['relu', 'elu']
 ```
 
-![Comparison of various optimizers](optimizer.gif)
+![Comparison of various optimizers](assets/optimizer.gif)
 
-The model used an Adadelta optimizer, which is a practical choice. It is [recommended](https://keras.io/optimizers/#adadelta) to leave the parameters of this optimizer at their default values in Keras, so we are not tuning for the optimizer learning rate.
+The model used an **Adadelta optimizer**, which is a practical choice. It is [recommended](https://keras.io/optimizers/#adadelta) to leave the parameters of this optimizer at their default values in Keras, so we are not tuning for the optimizer learning rate.
 
-###4. Results
+### 4. Results
 
 The model with the ELU activation layer seemed to work better. We obtained `min_val_loss` of **0.0099** for that model.
 
@@ -243,11 +240,11 @@ Epoch 20/20
 25600/25600 [==============================] - 150s - loss: 0.0115 - val_loss: 0.0109
 ```
 
-One can have a look into the [log\ foler](log\) for more details.
+One can have a look into the [log folder](log) for more details.
 
-The most suprising thing is that the model seems to work better on the second track: [the first track run](video1.mp4) versus [the second track run](video2.mp4). Still have no idea why that could be the case :)
+The most suprising thing is that the model seems to work better on the second track: [the first track run](run1.mp4) versus [the second track run](run2.mp4). Furthermore, the car in the second track tried to step back a litte bit for a while before running. Still have no idea why that could be the case! :)
 
-####5. Recording issues
+#### 5. Recording issues
 
 First, I tried to screen-recording all the process to have the "best" overview for this project. Since the vehicle control parameter is very sensitive, and running simultaneously many "heavy" processes (QuickPlay for recording, Udacity simulator, and the drive.py process) on a four-year-old Macbook with worst quality and lowest resolution still caused the car to fluctuate a lot on the street, and losed its track. Thus, I haved to save the recorded images from the simulator for this project, then rebuild the video later on.
 
