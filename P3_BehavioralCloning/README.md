@@ -49,7 +49,7 @@ The model.py file contains the code for training and saving the convolution neur
 
 ### 1. Data
 
-We use the sample data from [Udacity](https://d17h27t6h515a5.cloudfront.net/topher/2016/December/584f6edd_data/data.zip).
+We use the sample data from [Udacity](https://d17h27t6h515a5.cloudfront.net/topher/2016/December/584f6edd_data/data.zip), since we have retired from gaming for years.
 
 From each timestamp, we got three recorded picture from the simulator:
 
@@ -57,9 +57,11 @@ From each timestamp, we got three recorded picture from the simulator:
 |-------------|---------------|--------------|
 | ![](assets/pic_left.jpg) | ![](assets/pic_center.jpg) | ![](assets/pic_right.jpg) |
 
-The images will be preprocess before putting into the CNN as follow:
+The images will be preprocessed before putting into the CNN as follow:
 
 ![Images preprocessing pipeline](assets/preprocess_pipeline.png)
+
+One can find all the necessary function for handling the images in [here](image_utils.py).
 
 ### 2. Model architecture
 
@@ -159,7 +161,7 @@ Non-trainable params: 472
 
 ### 3. Training and parameter tuning
 
-This is a regression problem so our goal is to minimize the Mean Square Error of the vehicle control output.
+This is a regression problem so our goal is to minimize the **Mean Square Error** (MSE) of the vehicle control output.
 
 We used `fit_generator` API of the Keras library for training our model, as the training data was too large to fit into our memory.
 
@@ -195,7 +197,7 @@ The model used an **Adadelta optimizer**, which is a practical choice. It is [re
 
 ### 4. Results
 
-The model with the **ELU activation** layer seemed to work **better**. We obtained `min_val_loss` of **0.0099** for that model.
+The model with the **ELU activation** layer seemed to work **better**. We obtained `min_val_loss` of **MSE 0.0099** for that model.
 
 ```sh
 Epoch 1/20
@@ -248,7 +250,7 @@ The most suprising thing is that **the model works better on the second track**:
 
 First, I tried to **screen-recording** all the process to have the "best" overview for this project. Since the vehicle control parameter is very sensitive, and running simultaneously many "heavy" processes (QuickPlay for recording, Udacity simulator for simulation, and the drive.py process for driving) on a four-year-old Macbook with worst quality and lowest resolution still caused the car to fluctuate a lot on the street, and losed its track.
 
-Thus, I haved to save the recorded images from the simulator for this project, then rebuild the video later on. I would love to see how my model running on these tracks on a relative "strong" computer :)
+Thus, I haved to **save the recorded images from the simulator** for this project, then **rebuild the video** later on. I would love to see how my model running on these tracks on a relative "strong" computer :)
 
 ---
 

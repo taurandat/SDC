@@ -11,8 +11,12 @@ IMG_PATH = './data/'
 STEERING_COEFFICIENT = 0.229
 
 
-def generate_new_image(image, steering_angle, top_crop_percent=0.35, bottom_crop_percent=0.1,
-                       resize_dim=(64, 64), do_shear_prob=0.9):
+def generate_new_image(image,
+                       steering_angle,
+                       top_crop_percent=0.35,
+                       bottom_crop_percent=0.1,
+                       resize_dim=(64, 64),
+                       do_shear_prob=0.9):
     """
     Get a new randomized image base on a given image, according to the given parameters.
     """
@@ -22,11 +26,8 @@ def generate_new_image(image, steering_angle, top_crop_percent=0.35, bottom_crop
         image, steering_angle = image_utils.random_shear(image, steering_angle)
 
     image = image_utils.crop(image, top_crop_percent, bottom_crop_percent)
-
     image, steering_angle = image_utils.random_flip(image, steering_angle)
-
     image = image_utils.random_gamma(image)
-
     image = image_utils.resize(image, resize_dim)
 
     return image, steering_angle
@@ -39,11 +40,10 @@ def get_next_image_files(batch_size=64):
     one of these three images and its steering angle.
     """
     data = pd.read_csv(DRIVING_LOG_FILE)
-    num_of_img = len(data)
-    rnd_indices = np.random.randint(0, num_of_img, batch_size)
+    random_indices = np.random.randint(0, len(data), batch_size)
 
     image_files_and_angles = []
-    for index in rnd_indices:
+    for index in random_indices:
         rnd_image = np.random.randint(0, 3)
         if rnd_image == 0:
             img = data.iloc[index]['left'].strip()
@@ -82,7 +82,6 @@ def generate_next_batch(batch_size=64):
             X_batch.append(new_image)
             y_batch.append(new_angle)
 
-        assert len(
-            X_batch) == batch_size, 'len(X_batch) == batch_size should be True'
+        assert len(X_batch) == batch_size, 'len(X_batch) == batch_size should be True'
 
         yield np.array(X_batch), np.array(y_batch)
