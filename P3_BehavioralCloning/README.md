@@ -69,9 +69,9 @@ The model architecture is borrowed from NVIDIA paper [End to End Learning for Se
 
 Furthermore, several modifications have been added.
 
-+ Batch Normalizations: A batch normalization layer is added after each 2D Convolution layer. This is an alternative option for weight initialization, by forcing the activations throughout a network to take on a unit gaussian distribution at the beginning of the training. From a practical point of view, it has been shown that this approach is more robust than a bad initialization. Additionally, batch normalization can be interpreted as doing preprocessing at every layer of the network, but integrated into the network itself in a differentiably manner.
++ **Batch Normalizations**: A batch normalization layer is added after each 2D Convolution layer. This is an alternative option for weight initialization, by forcing the activations throughout a network to take on a unit gaussian distribution at the beginning of the training. From a practical point of view, it has been shown that this approach is more robust than a bad initialization. Additionally, batch normalization can be interpreted as doing preprocessing at every layer of the network, but integrated into the network itself in a differentiably manner.
 
-+ Dropouts: A dropout layer is added after each max pooling layer. This is to prevent the overfitting problem.
++ **Dropouts**: A dropout layer is added after each max pooling layer. This is to prevent the overfitting problem. (It's pretty strange that the NVIDIA's paper does not mention any term like "overfitting" or "dropout".)
 
 This is the output of model.summary()
 
@@ -195,7 +195,7 @@ The model used an **Adadelta optimizer**, which is a practical choice. It is [re
 
 ### 4. Results
 
-The model with the ELU activation layer seemed to work better. We obtained `min_val_loss` of **0.0099** for that model.
+The model with the **ELU activation** layer seemed to work **better**. We obtained `min_val_loss` of **0.0099** for that model.
 
 ```sh
 Epoch 1/20
@@ -242,13 +242,13 @@ Epoch 20/20
 
 One can have a look into the [log folder](log) for more details.
 
-The most suprising thing is that the model seems to work better on the second track: [the first track run](run1.mp4) versus [the second track run](run2.mp4). Furthermore, the car in the second track tried to step back a litte bit for a while before running. Still have no idea why that could be the case! :)
+The most suprising thing is that **the model works better on the second track**: [the first track run](run1.mp4) versus [the second track run](run2.mp4). Furthermore, the car in the second track tried to step back a litte bit for a while before running. Still have no idea why that could be the case! :)
 
 #### 5. Recording issues
 
-First, I tried to screen-recording all the process to have the "best" overview for this project. Since the vehicle control parameter is very sensitive, and running simultaneously many "heavy" processes (QuickPlay for recording, Udacity simulator, and the drive.py process) on a four-year-old Macbook with worst quality and lowest resolution still caused the car to fluctuate a lot on the street, and losed its track. Thus, I haved to save the recorded images from the simulator for this project, then rebuild the video later on.
+First, I tried to **screen-recording** all the process to have the "best" overview for this project. Since the vehicle control parameter is very sensitive, and running simultaneously many "heavy" processes (QuickPlay for recording, Udacity simulator for simulation, and the drive.py process for driving) on a four-year-old Macbook with worst quality and lowest resolution still caused the car to fluctuate a lot on the street, and losed its track.
 
-I would love to see how my model running on these tracks on a relative "strong" computer :)
+Thus, I haved to save the recorded images from the simulator for this project, then rebuild the video later on. I would love to see how my model running on these tracks on a relative "strong" computer :)
 
 ---
 
