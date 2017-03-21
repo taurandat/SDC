@@ -12,3 +12,7 @@ cache/
 # binary
 *.swp
 *.p
+
+# training data for P5
+P5_VehicleDetection/data/vehicles/*.png
+P5_VehicleDetection/data/non-vehicles/*.png
